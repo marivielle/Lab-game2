@@ -255,11 +255,23 @@ def execute_take(item_id):
     """
 
     item_in_room = False
+    total_mass = 0
+    for inv in inventory:
+        total_mass += inv["mass"]
+        
     for item in range(0, len(current_room["items"])):
-        if current_room["items"][item]["id"] == item_id:
-            inventory.append(current_room["items"].pop(item))
-            item_in_room = True
-            break
+        if total_mass == 3:
+            print("You are carrying too much")
+            
+        elif current_room["items"][item]["id"] == item_id:
+            if total_mass + current_room["items"][item]["mass"] > 3:
+                print("You are carrying too much")
+                item_in_room = True
+                break
+            else:
+                inventory.append(current_room["items"].pop(item))
+                item_in_room = True
+                break
 
     if item_in_room == False:
         print("\nYou cannot take that")
