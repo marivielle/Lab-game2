@@ -24,7 +24,13 @@ def list_of_items(items):
     'money, a student handbook, laptop'
 
     """
-    pass
+    string = ""
+    for item in range(0, len(items)):
+        string += items[item]["name"]
+        if item != len(items)-1:
+            string += "," + " "
+        
+    return string
 
 
 def print_room_items(room):
