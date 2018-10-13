@@ -11,6 +11,29 @@ skip_words = ['a', 'about', 'all', 'an', 'another', 'any', 'around', 'at',
               'towards', 'until', 'us', 'want', 'we', 'what', 'when', 'why',
               'wish', 'with', 'would']
 
+def remove_spaces(text):
+    new_text = ""
+    letter_position_front = 0
+    letter_position_back = -1
+
+    while True:
+        for char in range(0, len(text)):
+            if text[char] != " ":
+                letter_position_front = char
+                break
+            
+        for char in range(1, len(text)+1):
+            if text[len(text)-char] != " ":
+                letter_position_back = len(text)-char
+                break
+        
+        new_text = text[letter_position_front:letter_position_back+1]  
+        break
+
+    return new_text
+
+
+
 
 def filter_words(words, skip_words):
     """This function takes a list of words and returns a copy of the list from
@@ -27,7 +50,12 @@ def filter_words(words, skip_words):
     ['go', 'passage', 'south']
 
     """
-    pass
+    new_list = []
+    for word in words:
+        if not (word in skip_words):
+            new_list.append(word)
+            
+    return new_list
 
     
 def remove_punct(text):
@@ -78,6 +106,12 @@ def normalise_input(user_input):
     """
     # Remove punctuation and convert to lower case
     no_punct = remove_punct(user_input).lower()
+    no_space = remove_spaces(no_punct)
+    split_string = no_space.split()
+    filter_string = filter_words(split_string, skip_words)
+
+    return filter_string
+    
 
     #
     # COMPLETE ME!
